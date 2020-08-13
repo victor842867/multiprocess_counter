@@ -1,6 +1,5 @@
 
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
 #include <sys/types.h>
 #include <sys/mman.h>
@@ -32,10 +31,10 @@ int main() {
 
 
   for(i=0;descarte != '\n';i++){
-    scanf("%d",&entrada_atual); /*Lendo o proximo numero que será verificado*/
 
-    if(descarte != '\n'){ /*Verificando se a entrada lida é final de linha*/
-      scanf("%c",&descarte);
+    scanf("%d",&entrada_atual); /*Lendo o proximo numero que será verificado*/
+    scanf("%c",&descarte);      /*Verificando se a entrada lida é final de linha*/
+
       processo1 = fork();
       if(processo1 == 0 ){
         primo = verifica_primo(entrada_atual);
@@ -45,10 +44,10 @@ int main() {
         exit(0);
       }else{ /*continua processo da main apos chamada do processo 1*/
 
-        scanf("%d",&entrada_atual); /*Lendo o proximo numero que será verificado*/
+        if(descarte != '\n'){
+          scanf("%d",&entrada_atual); /*Lendo o proximo numero que será verificado*/
+          scanf("%c",&descarte);      /*Verificando se a entrada lida é final de linha*/
 
-        if(descarte != '\n'){ /*Verificando se a entrada lida é final de linha*/
-          scanf("%c",&descarte);
           processo2 = fork();
           if(processo2 == 0 ){
             primo = verifica_primo(entrada_atual);
@@ -58,24 +57,23 @@ int main() {
             exit(0);
           }else{ /*continua processo da main apos chamada do processo 2*/
 
+            if(descarte != '\n'){
             scanf("%d",&entrada_atual); /*Lendo o proximo numero que será verificado*/
+            scanf("%c",&descarte);      /*Verificando se a entrada lida é final de linha*/
 
-            if(descarte != '\n'){ /*Verificando se a entrada lida é final de linha*/
-              scanf("%c",&descarte);
-              processo3 = fork();
-              if(processo3 == 0){
-                primo = verifica_primo(entrada_atual);
+            processo3 = fork();
+            if(processo3 == 0){
+              primo = verifica_primo(entrada_atual);
                 if(primo == 1){
                   (*quantidade_de_primos)++;
                 }
                 exit(0);
               }else{ /*continua processo da main apos chamada do processo 3*/
-
+                if(descarte != '\n'){
 
                 scanf("%d",&entrada_atual); /*Lendo o proximo numero que será verificado*/
+                scanf("%c",&descarte);      /*Verificando se a entrada lida é final de linha*/
 
-                if(descarte != '\n'){ /*Verificando se a entrada lida é final de linha*/
-                  scanf("%c",&descarte);
                   processo4 = fork();
                   if(processo4 == 0){
                     primo = verifica_primo(entrada_atual);
@@ -84,6 +82,7 @@ int main() {
                     }
                     exit(0);
                   }else{
+                    if(descarte != '\n'){
                   }
                 }
               }
